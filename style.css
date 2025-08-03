@@ -201,7 +201,7 @@ body.light-mode .card p {
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .input-group {
     display: flex;
@@ -422,10 +422,10 @@ body.light-mode .image-container {
 
 /* Message Box */
 .message-box {
-    margin-top: 20px;
     padding: 15px;
     border-radius: 6px;
     font-weight: 600;
+    margin-bottom: 20px;
 }
 .message-box.error {
     background-color: rgba(215, 58, 73, 0.2);
