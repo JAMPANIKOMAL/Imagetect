@@ -39,7 +39,6 @@ $(document).ready(function () {
             }
             reader.readAsDataURL(originalFile);
             
-            // Clear previous compressed results
             resetCompressedView();
 
         } else {
@@ -86,33 +85,52 @@ $(document).ready(function () {
             img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                
-                let quality = 0.9;
-                let attempts = 10; // Max attempts to find the right size
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
 
-                // Function to perform a compression attempt
-                const tryCompression = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0);
+                let minQuality = 0;
+                let maxQuality = 1;
+                let bestBlob = null;
+                const maxAttempts = 15; // More attempts for better precision
+                let currentAttempt = 0;
+
+                // Binary search to find the best quality for the target size
+                const searchForBestQuality = () => {
+                    if (currentAttempt >= maxAttempts) {
+                        if (bestBlob) {
+                            displayCompressedImage(bestBlob);
+                        } else {
+                            // Fallback to the lowest quality if no suitable blob was found
+                            canvas.toBlob(blob => {
+                                displayCompressedImage(blob);
+                                showMessage('Could not compress to the target size. Result is the smallest possible.', 'error');
+                            }, 'image/jpeg', 0);
+                        }
+                        return;
+                    }
+
+                    currentAttempt++;
+                    const quality = (minQuality + maxQuality) / 2;
 
                     canvas.toBlob(blob => {
-                        console.log(`Attempt with quality ${quality.toFixed(2)}: Size = ${(blob.size / 1024).toFixed(2)} KB`);
+                        console.log(`Attempt ${currentAttempt}: Quality ${quality.toFixed(4)}, Size ${(blob.size / 1024).toFixed(2)} KB`);
 
-                        if (blob.size > targetSizeBytes && attempts > 0) {
-                            quality -= 0.1; // Reduce quality
-                            if (quality < 0.1) quality = 0.1; // Minimum quality
-                            attempts--;
-                            // Use a timeout to avoid blocking the UI thread on many attempts
-                            setTimeout(tryCompression, 100);
+                        if (blob.size > targetSizeBytes) {
+                            // If the size is too big, the max quality is now our current quality
+                            maxQuality = quality;
                         } else {
-                            displayCompressedImage(blob);
+                            // This is a good candidate, store it and try for even better quality
+                            bestBlob = blob;
+                            minQuality = quality;
                         }
+                        // Continue the search
+                        searchForBestQuality();
+
                     }, 'image/jpeg', quality);
                 };
-                
-                tryCompression();
+
+                searchForBestQuality();
             };
             img.onerror = () => {
                 showMessage('Failed to load the image for compression.', 'error');
@@ -139,7 +157,11 @@ $(document).ready(function () {
         
         $('#loading').hide();
         $('#compressBtn').prop('disabled', false);
-        showMessage('Compression successful!', 'success');
+        if (!bestBlob || blob.size > targetSizeBytes) {
+             // This message is handled in the compression function now
+        } else {
+            showMessage('Compression successful!', 'success');
+        }
     }
 
     function resetCompressedView() {
