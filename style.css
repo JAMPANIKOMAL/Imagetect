@@ -466,18 +466,17 @@ body.light-mode .download-area input[type="text"] {
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
+        margin-top: 70px;
     }
     .top-bar {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        padding: 15px 15px;
-        margin: 0 -15px 25px -15px;
-        width: calc(100% + 30px);
+        padding: 8px 15px;
+        min-height: 60px;
     }
     .logo-title h1 {
         font-size: 1.4rem;
+    }
+    .header-controls {
+        gap: 10px;
     }
     .toggle-switch {
         font-size: 0.8rem;
@@ -495,16 +494,138 @@ body.light-mode .download-area input[type="text"] {
     input:checked + .slider:before {
         transform: translateX(18px);
     }
+    .card {
+        padding: 20px 15px;
+        margin: 0 10px;
+        text-align: center;
+    }
+    .card h2 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+    .card p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
     .controls-area {
         flex-direction: column;
-        align-items: center; /* Center align on mobile */
-        gap: 20px;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
     }
-    .input-group-labeled {
-        align-items: center; /* Center the label on mobile */
+    .input-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 300px;
+    }
+    .btn-main {
+        width: 100%;
+        max-width: 300px;
+        height: 45px;
+        font-size: 1rem;
+        font-weight: 600;
+        box-sizing: border-box;
+    }
+    .file-name-container {
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+    }
+    .file-name {
+        font-size: 0.9rem;
+    }
+    .input-group-compound {
+        flex-direction: row;
+        height: 45px;
+        align-items: center;
+        width: 100%;
+        max-width: 300px;
+        box-sizing: border-box;
+    }
+    .input-group-compound .label {
+        border-right: 1px solid var(--border-dark);
+        border-bottom: none;
+        justify-content: center;
+        min-width: 90px;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    body.light-mode .input-group-compound .label {
+        border-right-color: var(--border-light);
+        border-bottom: none;
+    }
+    .input-group-compound input[type="number"] {
+        flex: 1;
+        min-width: 80px;
+        font-size: 1rem;
+    }
+    .select-wrapper {
+        border-left: 1px solid var(--border-dark);
+        min-width: 60px;
+    }
+    body.light-mode .select-wrapper {
+        border-left-color: var(--border-light);
+    }
+    .input-group-compound select {
+        width: 100%;
+        text-align: center;
+        padding: 0 25px 0 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
     }
     .preview-area {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .image-container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    .image-container h3 {
+        font-size: 1.3rem;
+    }
+    .image-container p {
+        font-size: 0.9rem;
+    }
+    .download-area {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+    .download-area input[type="text"] {
+        width: 280px !important;
+        max-width: 280px !important;
+        height: 40px;
+        font-size: 0.9rem;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 0 15px;
+        border: 1px solid var(--border-dark);
+        border-radius: 6px;
+        background: var(--bg-dark);
+        color: var(--text-dark);
+        outline: none;
+    }
+    body.light-mode .download-area input[type="text"] {
+        background: var(--bg-light);
+        border-color: var(--border-light);
+        color: var(--text-light);
+    }
+    .download-area .btn-main {
+        width: 280px !important;
+        max-width: 280px !important;
+        height: 40px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
     }
 }
+
+
