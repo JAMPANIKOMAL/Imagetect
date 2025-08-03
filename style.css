@@ -104,6 +104,8 @@ body.light-mode .top-bar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    height: 40px;
+    box-sizing: border-box;
 }
 body.light-mode .btn-main {
     box-shadow: 0 4px 8px var(--button-shadow-light);
@@ -155,7 +157,7 @@ body.light-mode .slider:before { background-color: var(--text-muted-light); }
 .card {
     background: var(--card-dark); 
     border: 1px solid var(--border-dark); 
-    padding: 25px; 
+    padding: 30px; 
     border-radius: 12px; 
     width: 100%;
     max-width: 1000px;
@@ -174,7 +176,7 @@ body.light-mode .card { background: var(--card-light); border: 1px solid var(--b
 }
 .card p {
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: var(--text-muted-dark);
 }
 body.light-mode .card p {
@@ -186,7 +188,7 @@ body.light-mode .card p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
     margin-bottom: 30px;
 }
@@ -199,13 +201,40 @@ body.light-mode .card p {
     font-weight: 600;
 }
 .input-group input[type="number"], .input-group select {
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 0 12px;
     border: 1px solid var(--border-dark);
     background-color: var(--bg-dark);
     color: var(--text-dark);
     font-size: 1rem;
+    height: 40px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
 }
+.input-group input[type="number"] {
+    border-radius: 6px;
+    width: 120px;
+    text-align: center;
+}
+/* Hide spinner arrows from number input */
+.input-group input[type=number]::-webkit-inner-spin-button, 
+.input-group input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.input-group input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input-group select {
+    border-radius: 6px;
+    width: 80px;
+}
+.input-group input[type="number"]:focus, .input-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+}
+
 body.light-mode .input-group input[type="number"], 
 body.light-mode .input-group select {
     border-color: var(--border-light);
