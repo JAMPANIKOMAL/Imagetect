@@ -42,10 +42,12 @@
                 <div class="input-group-compound">
                     <span class="label">Target Size</span>
                     <input type="number" id="targetSize" placeholder="e.g. 500" min="1">
-                    <select id="sizeUnit">
-                        <option value="KB" selected>KB</option>
-                        <option value="MB">MB</option>
-                    </select>
+                    <div class="select-wrapper">
+                        <select id="sizeUnit">
+                            <option value="KB" selected>KB</option>
+                            <option value="MB">MB</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <button id="compressBtn" class="btn-main btn-green" disabled>Compress</button>

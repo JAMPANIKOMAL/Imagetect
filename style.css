@@ -212,6 +212,9 @@ body.light-mode .card p {
 .file-name {
     color: var(--text-muted-dark);
     font-style: italic;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 body.light-mode .file-name {
     color: var(--text-muted-light);
@@ -288,13 +291,44 @@ body.light-mode .input-group-compound input[type="number"] {
     color: var(--text-light);
 }
 
+.select-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid var(--border-dark);
+}
+body.light-mode .select-wrapper {
+    border-left-color: var(--border-light);
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: var(--text-muted-dark);
+    transform: translateY(-25%);
+    pointer-events: none;
+    transition: border-color 0.2s;
+}
+body.light-mode .select-wrapper::after {
+    border-top-color: var(--text-muted-light);
+}
+
+
 .input-group-compound select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     height: 100%;
     border: none;
-    border-left: 1px solid var(--border-dark);
     background-color: var(--card-dark);
     color: var(--text-dark);
-    padding: 0 10px;
+    padding: 0 30px 0 15px;
     font-size: 1rem;
     outline: none;
     cursor: pointer;
@@ -302,7 +336,6 @@ body.light-mode .input-group-compound input[type="number"] {
 }
 
 body.light-mode .input-group-compound select {
-    border-left-color: var(--border-light);
     background-color: #f0f2f5;
     color: var(--text-light);
 }
