@@ -30,15 +30,12 @@ $(document).ready(function () {
         const fileNameSpan = $('#fileName');
         const fileNameContainer = fileNameSpan.parent();
 
-        // Always remove scrolling class first to reset the animation
         fileNameSpan.removeClass('scrolling');
 
         if (originalFile) {
             fileNameSpan.text(originalFile.name);
             $('#compressBtn').prop('disabled', false);
 
-            // Use a short timeout to allow the browser to render the new text
-            // and calculate its width before checking for overflow.
             setTimeout(function() {
                 if (fileNameSpan[0].scrollWidth > fileNameContainer[0].clientWidth) {
                     fileNameSpan.addClass('scrolling');
@@ -109,7 +106,6 @@ $(document).ready(function () {
                     canvas.height = Math.round(currentHeight);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                    // Binary search for quality
                     let minQuality = 0;
                     let maxQuality = 1;
                     let bestBlob = null;
@@ -122,13 +118,11 @@ $(document).ready(function () {
                                 displayCompressedImage(bestBlob);
                                 showMessage('Compression successful!', 'success');
                             } else {
-                                // If still too big, resize and try again
                                 if (currentWidth <= 10 || currentHeight <= 10) {
                                     if (bestBlob) {
                                         displayCompressedImage(bestBlob);
                                         showMessage('Could not reach the exact target size. This is the smallest possible result.', 'error');
                                     } else {
-                                        // Fallback if no blob was ever suitable
                                         canvas.toBlob(blob => {
                                             displayCompressedImage(blob);
                                             showMessage('Could not compress further. This is the smallest possible result.', 'error');
@@ -136,10 +130,9 @@ $(document).ready(function () {
                                     }
                                     return;
                                 }
-                                // Reduce dimensions for the next iteration
                                 currentWidth *= 0.9;
                                 currentHeight *= 0.9;
-                                setTimeout(processCompressionStep, 50); // Next step
+                                setTimeout(processCompressionStep, 50);
                             }
                             return;
                         }
@@ -168,7 +161,7 @@ $(document).ready(function () {
                     searchForBestQuality();
                 };
 
-                processCompressionStep(); // Start the process
+                processCompressionStep();
             };
             img.onerror = () => {
                 showMessage('Failed to load the image for compression.', 'error');
@@ -191,7 +184,28 @@ $(document).ready(function () {
         const sizeInMB = (sizeInKB / 1024).toFixed(2);
         $('#compressedSize').text(`Size: ${sizeInKB} KB / ${sizeInMB} MB`);
         
-        $('#downloadLink').attr('href', url).attr('download', `compressed_${originalFile.name}`).show();
+        const defaultName = `compressed_${originalFile.name}`;
+        const outputNameInput = $('#outputFileName');
+        const downloadLink = $('#downloadLink');
+
+        // Set up the download area
+        outputNameInput.val(defaultName);
+        downloadLink.attr('href', url).attr('download', defaultName);
+        $('.download-area').show();
+
+        // Update download attribute as user types
+        outputNameInput.on('keyup', function() {
+            let customName = $(this).val().trim();
+            if (customName) {
+                const originalExtension = originalFile.name.slice(originalFile.name.lastIndexOf('.'));
+                if (!customName.includes('.')) {
+                    customName += originalExtension;
+                }
+                downloadLink.attr('download', customName);
+            } else {
+                downloadLink.attr('download', defaultName);
+            }
+        });
         
         $('#loading').hide();
         $('#compressBtn').prop('disabled', false);
@@ -200,7 +214,8 @@ $(document).ready(function () {
     function resetCompressedView() {
         $('#compressedImage').hide().attr('src', '#');
         $('#compressedSize').text('');
-        $('#downloadLink').hide();
+        $('.download-area').hide();
+        $('#outputFileName').val('');
         $('#messageBox').hide().text('');
     }
 

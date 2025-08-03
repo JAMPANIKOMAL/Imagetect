@@ -287,7 +287,6 @@ body.light-mode .input-group-compound .label {
 }
 
 .input-group-compound input[type="number"] {
-    width: 120px;
     height: 100%;
     border: none;
     background: transparent;
@@ -296,16 +295,8 @@ body.light-mode .input-group-compound .label {
     text-align: center;
     outline: none;
     padding: 0 10px;
+    width: 120px;
     -moz-appearance: textfield;
-}
-
-.input-group-compound input[type="number"]::placeholder {
-    color: var(--text-muted-dark);
-    opacity: 0.7;
-}
-
-body.light-mode .input-group-compound input[type="number"]::placeholder {
-    color: var(--text-muted-light);
 }
 
 .input-group-compound input[type=number]::-webkit-inner-spin-button,
@@ -404,6 +395,38 @@ body.light-mode .image-container {
     font-weight: bold;
     margin-bottom: 15px;
 }
+
+/* === Download Area (New) === */
+.download-area {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+}
+.download-area input[type="text"] {
+    height: 40px;
+    border: 1px solid var(--border-dark);
+    background: var(--bg-dark);
+    color: var(--text-dark);
+    font-size: 1rem;
+    outline: none;
+    padding: 0 15px;
+    border-radius: 6px;
+    flex-grow: 1;
+    min-width: 0;
+    max-width: 250px;
+}
+body.light-mode .download-area input[type="text"] {
+    background: var(--bg-light);
+    border-color: var(--border-light);
+    color: var(--text-light);
+}
+.download-area .btn-main {
+    flex-shrink: 0;
+}
+
 
 /* Loading Spinner */
 .loading-spinner {

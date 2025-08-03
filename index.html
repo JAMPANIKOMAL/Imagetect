@@ -33,6 +33,7 @@
             <p>Upload an image and set a target size to compress it precisely.</p>
             
             <div class="controls-area">
+                <!-- Upload Button -->
                 <div class="input-group">
                     <label for="imageUpload" class="btn-main btn-blue">Upload Image</label>
                     <input type="file" id="imageUpload" accept="image/*" style="display: none;">
@@ -41,6 +42,7 @@
                     </div>
                 </div>
 
+                <!-- Target Size Input -->
                 <div class="input-group-compound">
                     <span class="label">Target Size</span>
                     <input type="number" id="targetSize" placeholder="e.g. 500" min="1">
@@ -52,6 +54,7 @@
                     </div>
                 </div>
                 
+                <!-- Compress Button -->
                 <button id="compressBtn" class="btn-main btn-green" disabled>Compress</button>
             </div>
             
@@ -69,7 +72,10 @@
                     <h3>Compressed Image</h3>
                     <img id="compressedImage" src="#" alt="Compressed Image Preview" style="display:none;">
                     <p id="compressedSize"></p>
-                    <a id="downloadLink" class="btn-main btn-blue" style="display: none;">Download Image</a>
+                    <div class="download-area" style="display: none;">
+                        <input type="text" id="outputFileName" placeholder="Enter filename...">
+                        <a id="downloadLink" class="btn-main btn-blue">Download Image</a>
+                    </div>
                 </div>
             </div>
         </section>
