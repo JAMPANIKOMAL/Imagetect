@@ -45,7 +45,7 @@ body.dark-mode {
 body.light-mode { background-color: var(--bg-light); color: var(--text-light); }
 .container { 
     max-width: 1200px;
-    margin: 0 auto; 
+    margin: 80px auto 0 auto; 
     padding: 0 20px;
     flex-grow: 1; 
     display: flex;
@@ -61,20 +61,29 @@ body.light-mode { background-color: var(--bg-light); color: var(--text-light); }
     align-items: center; 
     flex-wrap: nowrap; 
     gap: 20px; 
-    margin: 0 0 25px 0;
-    padding: 20px 0;
+    margin: 0;
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid var(--border-dark);
+    min-height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--bg-dark);
 }
 body.light-mode .top-bar {
     border-bottom-color: var(--border-light);
+    background: var(--bg-light);
 }
 .logo-title { 
     display: flex; 
     align-items: center; 
     gap: 12px; 
     flex-shrink: 0;
+    flex: 0 0 auto;
 }
 .logo-title h1 { 
     font-size: 1.6rem; 
@@ -86,6 +95,7 @@ body.light-mode .top-bar {
     align-items: center; 
     gap: 15px; 
     flex-shrink: 0;
+    flex: 0 0 auto;
 }
 
 /* === General Button Styles === */
@@ -326,8 +336,32 @@ body.light-mode .image-container {
         padding: 0 15px;
     }
     .top-bar {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
         gap: 15px;
+        padding: 15px 15px;
+        margin: 0 -15px 25px -15px;
+        width: calc(100% + 30px);
+    }
+    .logo-title h1 {
+        font-size: 1.4rem;
+    }
+    .toggle-switch {
+        font-size: 0.8rem;
+    }
+    .switch {
+        width: 40px;
+        height: 20px;
+    }
+    .slider:before {
+        height: 14px;
+        width: 14px;
+        left: 2px;
+        bottom: 2px;
+    }
+    input:checked + .slider:before {
+        transform: translateX(18px);
     }
     .controls-area {
         flex-direction: column;
