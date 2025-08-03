@@ -207,18 +207,45 @@ body.light-mode .card p {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.file-name-container {
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .file-name {
     color: var(--text-muted-dark);
     font-style: italic;
-    height: 40px;
-    display: flex;
-    align-items: center;
+    display: inline-block;
+    white-space: nowrap;
+    will-change: transform;
 }
+
 body.light-mode .file-name {
     color: var(--text-muted-light);
 }
+
+.file-name.scrolling {
+    padding-left: 100%;
+    animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
 
 /* Compound Input Group for Target Size */
 .input-group-compound {

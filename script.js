@@ -13,6 +13,7 @@ $(document).ready(function () {
         }
     });
 
+    // Apply saved theme on page load
     if (localStorage.getItem('theme') === 'light-mode') {
         $('#themeToggle').prop('checked', false);
         applyTheme('light-mode');
@@ -26,9 +27,23 @@ $(document).ready(function () {
 
     $('#imageUpload').on('change', function(e) {
         originalFile = e.target.files[0];
+        const fileNameSpan = $('#fileName');
+        const fileNameContainer = fileNameSpan.parent();
+
+        // Always remove scrolling class first to reset the animation
+        fileNameSpan.removeClass('scrolling');
+
         if (originalFile) {
-            $('#fileName').text(originalFile.name);
+            fileNameSpan.text(originalFile.name);
             $('#compressBtn').prop('disabled', false);
+
+            // Use a short timeout to allow the browser to render the new text
+            // and calculate its width before checking for overflow.
+            setTimeout(function() {
+                if (fileNameSpan[0].scrollWidth > fileNameContainer[0].clientWidth) {
+                    fileNameSpan.addClass('scrolling');
+                }
+            }, 100);
 
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -42,7 +57,7 @@ $(document).ready(function () {
             resetCompressedView();
 
         } else {
-            $('#fileName').text('No file chosen');
+            fileNameSpan.text('No file chosen');
             $('#compressBtn').prop('disabled', true);
             $('#originalImage').hide();
             $('#originalSize').text('');
@@ -90,7 +105,6 @@ $(document).ready(function () {
                 let currentHeight = img.height;
 
                 const processCompressionStep = () => {
-                    console.log(`Processing step with dimensions: ${Math.round(currentWidth)}x${Math.round(currentHeight)}`);
                     canvas.width = Math.round(currentWidth);
                     canvas.height = Math.round(currentHeight);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
