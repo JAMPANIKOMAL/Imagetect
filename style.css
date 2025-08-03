@@ -107,7 +107,7 @@ body.light-mode .top-bar {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     white-space: nowrap;
-    border: none;
+    border: 1px solid transparent;
     box-shadow: 0 4px 8px var(--button-shadow-dark);
     color: white;
     text-decoration: none;
@@ -159,6 +159,7 @@ body.light-mode .slider:before { background-color: var(--text-muted-light); }
     gap: 15px;
     flex-grow: 1;
     align-items: center;
+    justify-content: center; /* Added to vertically center the card */
     padding: 20px 0;
     width: 100%;
     box-sizing: border-box;
@@ -170,7 +171,7 @@ body.light-mode .slider:before { background-color: var(--text-muted-light); }
     padding: 30px;
     border-radius: 12px;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px; /* Increased width */
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 5px 15px var(--shadow-dark);
@@ -198,7 +199,7 @@ body.light-mode .card p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     flex-wrap: wrap;
     margin-bottom: 30px;
 }
@@ -207,50 +208,7 @@ body.light-mode .card p {
     align-items: center;
     gap: 10px;
 }
-.input-group label {
-    font-weight: 600;
-}
-.input-group input[type="number"], .input-group select {
-    padding: 0 12px;
-    border: 1px solid var(--border-dark);
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-    font-size: 1rem;
-    height: 40px;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-}
-.input-group input[type="number"] {
-    border-radius: 6px;
-    width: 120px;
-    text-align: center;
-}
-/* Hide spinner arrows from number input */
-.input-group input[type=number]::-webkit-inner-spin-button,
-.input-group input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.input-group input[type=number] {
-  -moz-appearance: textfield;
-}
 
-.input-group select {
-    border-radius: 6px;
-    width: 80px;
-}
-.input-group input[type="number"]:focus, .input-group select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
-}
-
-body.light-mode .input-group input[type="number"],
-body.light-mode .input-group select {
-    border-color: var(--border-light);
-    background-color: var(--bg-light);
-    color: var(--text-light);
-}
 .file-name {
     color: var(--text-muted-dark);
     font-style: italic;
@@ -258,6 +216,97 @@ body.light-mode .input-group select {
 body.light-mode .file-name {
     color: var(--text-muted-light);
 }
+
+/* Compound Input Group for Target Size */
+.input-group-compound {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 6px;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+body.light-mode .input-group-compound {
+    background-color: var(--bg-light);
+    border-color: var(--border-light);
+}
+
+.input-group-compound:focus-within {
+    border-color: var(--primary);
+}
+
+.input-group-compound .label {
+    padding: 0 15px;
+    font-weight: 600;
+    color: var(--text-muted-dark);
+    background-color: var(--card-dark);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--border-dark);
+}
+
+body.light-mode .input-group-compound .label {
+    background-color: #f0f2f5;
+    color: var(--text-muted-light);
+    border-right-color: var(--border-light);
+}
+
+.input-group-compound input[type="number"] {
+    width: 120px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: var(--text-dark);
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+    padding: 0 10px;
+    -moz-appearance: textfield;
+}
+
+.input-group-compound input[type="number"]::placeholder {
+    color: var(--text-muted-dark);
+    opacity: 0.7;
+}
+
+body.light-mode .input-group-compound input[type="number"]::placeholder {
+    color: var(--text-muted-light);
+}
+
+.input-group-compound input[type=number]::-webkit-inner-spin-button,
+.input-group-compound input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+body.light-mode .input-group-compound input[type="number"] {
+    color: var(--text-light);
+}
+
+.input-group-compound select {
+    height: 100%;
+    border: none;
+    border-left: 1px solid var(--border-dark);
+    background-color: var(--card-dark);
+    color: var(--text-dark);
+    padding: 0 10px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+body.light-mode .input-group-compound select {
+    border-left-color: var(--border-light);
+    background-color: #f0f2f5;
+    color: var(--text-light);
+}
+
 
 .preview-area {
     display: flex;
@@ -365,7 +414,11 @@ body.light-mode .image-container {
     }
     .controls-area {
         flex-direction: column;
-        gap: 15px;
+        align-items: center; /* Center align on mobile */
+        gap: 20px;
+    }
+    .input-group-labeled {
+        align-items: center; /* Center the label on mobile */
     }
     .preview-area {
         flex-direction: column;
